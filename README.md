@@ -10,5 +10,3 @@ This project uses a virtual environment:
 Clone the repo to your local machine.
 
 Create a virtual environment (Some IDEs like PyCharm prompts you to do this automatically when you open the folder).
-
-Note: The venv/ folder is excluded from version control via .gitignore
