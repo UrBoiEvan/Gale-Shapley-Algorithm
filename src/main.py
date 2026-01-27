@@ -14,16 +14,15 @@ def parseFile(file):
     targetFile.close()
     return hospital_ranks, student_ranks
 
-def stableMatching(hospitals,students):
-    #init all hospitals to free
+def stableMatching(hospital_ranks,student_ranks):
+    # init all hospitals to free
     free_hospitals = list(hospitals.keys())
     print(free_hospitals)
     # TODO implement algorithm
     return
 
 if __name__=="__main__":
-    hospitals, students = {}, {}
-    hospitals, students = parseFile("example.in")
-    print(hospitals)
-    print(students)
-    stableMatching(hospitals,students)
+    hospital_ranks, student_ranks = parseFile("example.in")
+    print(hospital_ranks)
+    print(student_ranks)
+    stableMatching(hospital_ranks,student_ranks)
