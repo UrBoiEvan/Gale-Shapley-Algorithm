@@ -42,7 +42,7 @@ def stableMatching(hospital_ranks,student_ranks):
 def main():
     hospital_ranks, student_ranks = parseFile("example.in")
     res = stableMatching(hospital_ranks, student_ranks)
-    print("Hospital Ranks: ",res)
+    print("Hospital Match: ",res)
     #TODO verify stable match
 
 if __name__=="__main__":
