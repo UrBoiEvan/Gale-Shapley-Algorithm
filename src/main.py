@@ -1,5 +1,7 @@
 from collections import defaultdict
 import sys
+import time
+import random
 
 
 # Helper function to open input files
@@ -79,6 +81,7 @@ def check_validity(matching, hospital_ranks, student_ranks):
 def check_stability(matching, hospital_ranks, student_ranks):
     # TODO: stability
     # Search for blocking pairs where hospital h prefers student s over its current match and student s prefers hospital h over its current match
+    pass
 
 def verify_matching(matching, hospital_ranks, student_ranks):
     # Check validity
@@ -97,9 +100,53 @@ def verify_matching(matching, hospital_ranks, student_ranks):
     print("VALID & STABLE")
 
 
+# Task C
+# Generates random preference lists for n hospitals and n students.
+def generate_random_preferences(n):
+    hospital_ranks = {}
+    for h in range(1, n + 1):
+        temp = list(range(1, n + 1))
+        random.shuffle(temp)
+        hospital_ranks[h] = temp
+
+    student_ranks = {}
+    for s in range(1, n + 1):
+        temp = list(range(1, n + 1))
+        random.shuffle(temp)
+        student_ranks[s] = temp
+
+    return hospital_ranks, student_ranks
+
+def task_c():
+    print("n, match_time_sec, verify_time_sec")
+
+    sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+    for n in sizes:
+        hospital_ranks, student_ranks = generate_random_preferences(n)
+
+        # Matching
+        start_match = time.time()
+        matching = stableMatching(hospital_ranks, student_ranks)
+        end_match = time.time()
+
+        # Verification
+        start_verify = time.time()
+        #verify_matching(matching, hospital_ranks, student_ranks)
+        end_verify = time.time()
+
+        # Output
+        match_time = end_match - start_match
+        verify_time = end_verify - start_verify
+        print(f"{n}, {match_time:.6f}, {verify_time:.6f}")
+
+
 def main():
+    if len(sys.argv) == 2 and sys.argv[1] == "--C":
+        task_c()
+        return
+
     if len(sys.argv) != 2:
-        print('Incorrect args, use: "python matcher.py <input_file>"')
+        print('Incorrect args, use: \n"python main.py <input_file>"\tfor Tasks A&B\n"python main.py --C"\t\tfor Task C')
         sys.exit(1)
 
     input_file = sys.argv[1]
