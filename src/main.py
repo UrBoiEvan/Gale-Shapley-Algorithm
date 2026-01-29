@@ -9,9 +9,9 @@ def parseFile(file):
         line = targetFile.readline().split()
         line = [int(char) for char in line]
         if i < n+1:
-            hospital_ranks[i] = list(line)
+            hospital_ranks[i] = line
         else:
-            student_ranks[i-n] = list(line)
+            student_ranks[i-n] = line
         i += 1
     targetFile.close()
     return hospital_ranks, student_ranks
@@ -42,7 +42,7 @@ def stableMatching(hospital_ranks,student_ranks):
 def main():
     hospital_ranks, student_ranks = parseFile("example.in")
     res = stableMatching(hospital_ranks, student_ranks)
-    print("Hospital Ranks: ",res)
+    print("Hospital Match: ",res)
     #TODO verify stable match
 
 if __name__=="__main__":
