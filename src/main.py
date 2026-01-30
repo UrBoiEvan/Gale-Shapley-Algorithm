@@ -79,9 +79,20 @@ def check_validity(matching, hospital_ranks, student_ranks):
     return True, None
 
 def check_stability(matching, hospital_ranks, student_ranks):
-    # TODO: stability
-    # Search for blocking pairs where hospital h prefers student s over its current match and student s prefers hospital h over its current match
-    pass
+    # Basically, we map it in reverse so it's student: hospital
+    student_to_hospital = {s: h for h, s in matching.items()}
+    for h in hospital_ranks:
+        current_student = matching[h]
+        for s in hospital_ranks[h]:
+            if s == current_student:
+                break
+
+            # Check if student prefers h over current match
+            hh = student_to_hospital[s]
+            if student_ranks[s].index(h) < student_ranks[s].index(hh):
+                return False, (h, s)
+
+    return True, None
 
 def verify_matching(matching, hospital_ranks, student_ranks):
     # Check validity
@@ -97,7 +108,7 @@ def verify_matching(matching, hospital_ranks, student_ranks):
         print(f"UNSTABLE: (blocking pair: hospital {h}, student {s})")
         return
 
-    print("VALID & STABLE")
+    print("\n\nVALID STABLE")
 
 
 # Task C
@@ -146,7 +157,7 @@ def main():
         return
 
     if len(sys.argv) != 2:
-        print('Incorrect args, use: \n"python main.py <input_file>"\tfor Tasks A&B\n"python main.py --C"\t\tfor Task C')
+        print('Incorrect args, use: \n"python main.py <input_file>"\t\t\tfor Tasks A&B\n"python main.py --C"\t\t\t\tfor Task C\n"python main.py example.in > example.out"\tfor outputting to file')
         sys.exit(1)
 
     input_file = sys.argv[1]
@@ -157,7 +168,7 @@ def main():
     for h in sorted(res): print(h, res[h])
 
     # Task B
-
+    verify_matching(res, hospital_ranks, student_ranks)
 
     #TODO time complexity
 
