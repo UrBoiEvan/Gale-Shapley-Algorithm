@@ -142,7 +142,7 @@ def task_c():
 
         # Verification
         start_verify = time.time()
-        #verify_matching(matching, hospital_ranks, student_ranks)
+        verify_matching(matching, hospital_ranks, student_ranks)
         end_verify = time.time()
 
         # Output
