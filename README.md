@@ -11,22 +11,35 @@ Gale-Shapley-Algorithm for COP4533 Programming Assignment 1
 ## To compile/build the code and run Tasks A, B, and C
 Python is required to run the program. 
 To run, first **cd src** and use:
-  python main.py <input_file>        (Tasks A + B + C)
-  python main.py <input_file> --A    (Task A only)
-  python main.py <input_file> --B    (Task B only)
-  python main.py --C                 (Task C only)
+
+    python main.py <input_file>        (Tasks A + B + C)
+
+    python main.py <input_file> --A    (Task A only)
+
+    python main.py <input_file> --B    (Task B only)
+
+    python main.py --C                 (Task C only)
+  
   
 Example for running the matcher and verifier on "example.in":
-  python main.py example.in --B
+
+    python main.py example.in --B
   
 For reference, the structure of our submission is:
+
 ├── README.md
+
 ├── task_c/
+
 │   └── task_c_runtime_graph.png
+
 │	└── output_c.out
+
 └── src/
-    ├── main.py
-    └── example.in	<- input file you'd run the program with
+
+.    ├── main.py
+
+.   └── example.in	<- input file you'd run the program with
   
 ## Assumptions
 - Input files are well-formed and are always given with proper formatting as described on Canvas.
@@ -36,7 +49,9 @@ For reference, the structure of our submission is:
 
 ## Task C graph and analysis
 ![Task C Runtime Graph](task_c/task_c_runtime_graph.png)
+
 To evaluate scalability, we measured the running time of both the matching algorithm (Task A) and the verifier (Task B) for increasing problem sizes: n = 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
+
 For each value of n, we generated random complete preference lists for hospitals and students and measured the wall-clock running time (in seconds) using Python’s time.time() function. The matching algorithm and verifier were timed separately.
 The trends that we noticed are:
 - For small values of n, runtimes are near zero, probably due to how well the Python time module can resolve time.
