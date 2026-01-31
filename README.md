@@ -5,8 +5,8 @@ Gale-Shapley-Algorithm for COP4533 Programming Assignment 1
 - **Semyon baykov:** 
   **65667853**  
 
-- **Name:** TODO  
-  **UFID** TODO 
+- **Evan Harden:** 
+  **27541192**  
   
 ## To compile/build the code and run Tasks A, B, and C
 Python is required to run the program. 
