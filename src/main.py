@@ -94,21 +94,27 @@ def check_stability(matching, hospital_ranks, student_ranks):
 
     return True, None
 
-def verify_matching(matching, hospital_ranks, student_ranks):
+def verify_matching(matching, hospital_ranks, student_ranks, verbose=True):
     # Check validity
     valid, reason = check_validity(matching, hospital_ranks, student_ranks)
     if not valid:
-        print(f"INVALID: ({reason})")
-        return
+        if verbose:
+            print(f"INVALID: ({reason})")
+        return False
 
     # Check stability
     stable, blocking_pair = check_stability(matching, hospital_ranks, student_ranks)
     if not stable:
-        h, s = blocking_pair
-        print(f"UNSTABLE: (blocking pair: hospital {h}, student {s})")
-        return
+        if verbose:
+            h, s = blocking_pair
+            print(f"UNSTABLE: (blocking pair: hospital {h}, student {s})")
+        return False
 
-    print("\n\nVALID STABLE")
+    if verbose:
+        print("VALID STABLE")
+
+    return True
+
 
 
 # Task C
@@ -142,7 +148,7 @@ def task_c():
 
         # Verification
         start_verify = time.time()
-        verify_matching(matching, hospital_ranks, student_ranks)
+        verify_matching(matching, hospital_ranks, student_ranks, verbose=False)
         end_verify = time.time()
 
         # Output
@@ -152,25 +158,47 @@ def task_c():
 
 
 def main():
-    if len(sys.argv) == 2 and sys.argv[1] == "--C":
+    args = sys.argv[1:]
+
+    # Task C first because we don't need to parse file
+    if args == ["--C"]:
         task_c()
         return
 
-    if len(sys.argv) != 2:
-        print('Incorrect args, use: \n"python main.py <input_file>"\t\t\tfor Tasks A&B\n"python main.py --C"\t\t\t\tfor Task C\n"python main.py example.in > example.out"\tfor outputting to file')
+    # Output if wrong input
+    if len(args) < 1 or len(args) > 2:
+        print("Usage:")
+        print("  python main.py <input_file>        (Tasks A + B + C)")
+        print("  python main.py <input_file> --A    (Task A only)")
+        print("  python main.py <input_file> --B    (Task B only)")
+        print("  python main.py --C                 (Task C only)")
         sys.exit(1)
 
-    input_file = sys.argv[1]
+    # Set up vars
+    input_file = args[0]
+    flag = args[1] if len(args) == 2 else None
     hospital_ranks, student_ranks = parseFile(input_file)
+    matching = stableMatching(hospital_ranks, student_ranks)
 
-    # Task A
-    res = stableMatching(hospital_ranks, student_ranks)
-    for h in sorted(res): print(h, res[h])
+    # Task A only
+    if flag == "--A":
+        for h in sorted(matching):
+            print(h, matching[h])
+        return
 
-    # Task B
-    verify_matching(res, hospital_ranks, student_ranks)
+    # Task B only
+    if flag == "--B":
+        verify_matching(matching, hospital_ranks, student_ranks)
+        return
 
-    #TODO time complexity
+    # Default: Task A + B + C
+    print("TASK A:")
+    for h in sorted(matching):
+        print(h, matching[h])
+    print("\nTASK B:")
+    verify_matching(matching, hospital_ranks, student_ranks)
+    print("\nTASK C:")
+    task_c()
 
 if __name__=="__main__":
     main()
